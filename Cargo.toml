@@ -1,8 +1,7 @@
 [package]
 name = "oxide"
-crate-type = ["staticlib"]
 version = "0.1.0"
-description = "Simple, high-performance ML for rust"
+description = "experimental library for simple, high-performance ML in Rust with hardware acceleration"
 license = "MIT License"
 readme = "README.md"
 repository = "https://github.com/benjaminjellis/oxide"
@@ -12,4 +11,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0"
 arrayfire = "3.8"
+polars = {version = "0.14.2", features = ["pretty_fmt", "random"]}
+itertools = "0.10.1"
+rand = "0.8.0"

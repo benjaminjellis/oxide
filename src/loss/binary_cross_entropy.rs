@@ -1,5 +1,4 @@
 use crate::{activations, utils};
-use af;
 
 /// Binary Cross Entropy Loss
 ///
@@ -28,7 +27,5 @@ pub fn binary_cross_entropy(y: &af::Array<f32>, target: &af::Array<f32>) -> af::
         false,
     );
 
-    let mean = af::mean(&af::sub(&pos, &neg, false), 0);
-    af::af_print!("mean: ", mean);
-    return mean;
+    af::mean(&af::sub(&pos, &neg, false), 0)
 }

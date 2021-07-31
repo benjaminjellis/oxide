@@ -1,10 +1,9 @@
-use af;
 use std::process;
 
 /// Base for all models
 pub trait BaseModel {
     // TODO add more signatures, maybe fit and predict should be signatures?
-    /// Basic data validation
+    /// Basic datasets validation
     fn validate_data(x: &af::Array<f32>, y: &af::Array<f32>) {
         assert_eq!(
             x.dims()[0],
@@ -23,7 +22,14 @@ pub trait BaseModel {
     ///
     /// # Return Values
     /// nothing
-    fn fit(&mut self, epcohs: u16, x: af::Array<f32>, y: af::Array<f32>);
+    fn fit(
+        &mut self,
+        epcohs: u16,
+        x: af::Array<f32>,
+        targets: af::Array<f32>,
+        lr: f32,
+        batch_size: u64,
+    );
 
     /// Signature for fit function
     ///
@@ -40,6 +46,7 @@ pub trait BaseModel {
 
 /// Find what backend are available and set in order of preference
 pub fn which_backend() {
+    // TODO rexport this somwhere else, make it so you have to set it first thing
     let available_backends = af::get_available_backends();
 
     if available_backends.contains(&af::Backend::CUDA) {
