@@ -29,4 +29,4 @@ Examples will follow soon!
 ## Contributions
 
 oxide is under active development, and a list of features to build for v0.1.0 is available in the issues of this repository. 
-Contributions are very welcome, please see the [CONTRIBUTING.md]().
+Contributions are very welcome, please see the [CONTRIBUTING.md](https://github.com/benjaminjellis/oxide/blob/main/CONTRIBUTING.md).
