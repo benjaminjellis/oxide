@@ -1,2 +1,2 @@
-pub use self::linear_classifiers::LogisticRegression;
-mod linear_classifiers;
+pub use self::classifiers::LogisticRegression;
+mod classifiers;

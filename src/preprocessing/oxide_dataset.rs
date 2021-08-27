@@ -7,6 +7,7 @@ use polars::prelude::DataFrame;
 /// # Parameters
 /// - dataframe: polars dataframe to extract data from
 /// - target_column: name of the column that contains the target
+/// - test_train_split:
 ///
 /// # Returns
 /// - (features, targets) a tuple of af::Array<f32> arrays
@@ -14,7 +15,14 @@ use polars::prelude::DataFrame;
 pub fn make_dataset(
     mut dataframe: DataFrame,
     target_column: &str,
+    test_train_split: bool,
+    test_size: f32,
 ) -> Result<(af::Array<f32>, af::Array<f32>)> {
+    if test_train_split {
+        if test_size >= 0f32 {}
+        // TODO: implement
+    }
+
     // create target array
     let target_series = &dataframe.select_series(target_column)?[0].cast::<Float32Type>()?;
 

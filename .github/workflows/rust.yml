@@ -1,4 +1,4 @@
-name: Rust
+name: CI
 
 on:
   push:
@@ -8,8 +8,6 @@ on:
     
 env:
   CARGO_TERM_COLOR: always
-
-
 
 jobs:
   build:
@@ -24,4 +22,6 @@ jobs:
     - name: Install AF Binaries 
       run: chmod +x installaf.sh && yes | ./installaf.sh
     - name: Build
-      run: cargo build
+      run: cargo build --verbose --release
+    - name: Test
+      run: cargo test --verbose

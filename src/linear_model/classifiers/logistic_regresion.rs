@@ -1,4 +1,5 @@
 use crate::{activations, base, utils};
+use anyhow::Result;
 
 /// Logistic Regression Model
 ///
@@ -64,13 +65,17 @@ impl LogisticRegression {
                 let preds: af::Array<f32> = activations::sigmoid(
                     &(&af::matmul(x_mb, &self.w, af::MatProp::NONE, af::MatProp::NONE) + self.b),
                 );
-                let dw: af::Array<f32> = (1u64 / m)
+
+                // TODO dw is just array of zeros, why? the issue is multiplying the result of matmul and
+                // (1u64 / m)
+                let dw: af::Array<f32> = (1f32 / m as f32)
                     * af::matmul(
                         x_mb,
                         &af::sub(&preds, y_mb, false),
                         af::MatProp::TRANS,
                         af::MatProp::NONE,
                     );
+
                 let db: af::Array<f32> = (1u64 / m) * af::sub(&preds, y_mb, false);
 
                 self.w = af::sub(&self.w, &(self.lr * dw), false);
@@ -112,7 +117,7 @@ impl base::BaseModel for LogisticRegression {
         targets: af::Array<f32>,
         lr: f32,
         batch_size: u64,
-    ) {
+    ) -> Result<()> {
         self.epochs = epochs;
         self.lr = lr;
         self.batch_size = batch_size;
@@ -144,6 +149,7 @@ impl base::BaseModel for LogisticRegression {
                     n_classes)
             }
         }
+        Ok(())
     }
 
     /// Make predictions
@@ -154,13 +160,12 @@ impl base::BaseModel for LogisticRegression {
     ///
     /// # Return Values
     /// predictions of shape (m, 1)
-    fn predict(&mut self, x: af::Array<f32>) -> af::Array<f32> {
+    fn predict(&mut self, x: af::Array<f32>) -> Result<af::Array<f32>> {
         let preds = activations::sigmoid(&af::add(
             &af::matmul(&x, &self.w, af::MatProp::NONE, af::MatProp::NONE),
             &self.b,
             false,
         ));
-
-        af::round(&preds)
+        Ok(af::round(&preds))
     }
 }

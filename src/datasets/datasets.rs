@@ -1,3 +1,4 @@
+use anyhow::Result;
 use polars::prelude::*;
 
 /// IRIS Dataset

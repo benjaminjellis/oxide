@@ -1,5 +1,5 @@
 ![build status](https://github.com/benjaminjellis/oxide/actions/workflows/rust.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/benjaminjellis/oxide/blob/main/LICENSE)
 
 [<img align="right" src="docs/static/logo.png" width="300">](#)
 # oxide 
@@ -24,8 +24,31 @@ let train_df = ox::datasets::titanic(&"train");
 let test_df = ox::datasets::titanic(&"test");
 
 ```
-Examples will follow soon!
 
+Load your own dataset from csv:
+
+```rust
+use polars::prelude::*;
+let df = CsvReader::from_path("your_data.csv")?
+            .infer_schema(None)
+            .has_header(true)
+            .finish()?;
+```
+
+Convert your dataset to an oxide dataset:
+
+```rust
+let (x, targets) = ox::preprocessing::make_dataset(train_dataset, "Target")?;
+```
+
+### Training a model
+
+```rust 
+let mut model = ox::linear_model::LogisticRegression::new("sgd");
+model.fit(10u16, x, targets, 0.001, 10)?;
+``` 
+
+For more examples see [here](https://github.com/benjaminjellis/oxide/tree/main/examples).
 ## Contributions
 
 oxide is under active development, and a list of features to build for v0.1.0 is available in the issues of this repository. 

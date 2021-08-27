@@ -2,8 +2,8 @@
 
 Thank you for thinking about contributing! 
 
-Please first dis*cuss the change you wish to make via issues. There is a list of desired features for a v0.1 release, plese
-see here for the list. 
+Please first discuss the change you wish to make via issues. There is a list of desired features for a v0.1.0 release, please
+see [here](https://github.com/benjaminjellis/oxide/issues) for the list. 
 
 ## Code reviews
 
