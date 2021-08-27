@@ -7,17 +7,18 @@ use anyhow::Result;
 ///
 /// ```rust
 /// use oxide as ox;
+/// use ox::{linear_model::LogisticRegression, BaseModel};
 /// use arrayfire as af;
 /// // create random x and y
 /// let x: af::Array<f32> = af::randn!(1000, 10);
-/// let y: af::Array<f32> = af::randn!(100);
+/// let y: af::Array<f32> = af::randn!(1000);
 /// let unseen_x: af::Array<f32> = af::randn!(400, 10);
 /// // create a logistic regression model
-/// let mut model = ox::linear_model::LogisticRegression::new("sgd");
+/// let mut model = LogisticRegression::new("sgd");
 /// // fit the model for 10 epochs on your datasets x and y
-/// model.fit(10, &x, &y, 1e-3);
+/// model.fit(25u16, x, y, 0.01, 10).unwrap();;
 /// // make inference on unseen datasets
-/// predictions: af::Array<f32> = model.predict(&unssen_x);
+/// let predictions: af::Array<f32> = model.predict(unseen_x).unwrap();
 /// ```
 pub struct LogisticRegression {
     classes: af::Array<f32>,
@@ -101,7 +102,6 @@ impl base::BaseModel for LogisticRegression {
     ///
     /// # Parameters
     ///
-    /// - epochs: number of epochs to run for
     /// - epochs: number of epochs to train for
     /// - x: features of shape (m, n)
     /// - targets: targets of shape (m, 1)

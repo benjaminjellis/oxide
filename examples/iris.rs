@@ -16,7 +16,7 @@ fn main() -> Result<()> {
 
     // make an array fire dataset from the polars DataFrame
     let (x, targets): (af::Array<f32>, af::Array<f32>) =
-        ox::preprocessing::make_dataset(iris_dataset, "Target")?;
+        ox::preprocessing::make_dataset(iris_dataset, "Target", false, 0f32)?;
 
     // create a LogisticClassifier and fit it to the dataset
     let mut model: LogisticRegression = LogisticRegression::new("sgd");
